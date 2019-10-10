@@ -1,8 +1,6 @@
-Requeriments:
-  - Beautifulsoup
-  - Selenium: https://stackoverflow.com/a/18131102
-
-
+# Requeriments:
+#   - Beautifulsoup
+#   - Selenium: https://stackoverflow.com/a/18131102
 
 
 # import libraries
@@ -30,8 +28,11 @@ def check_instagram_followers(url):
 
     # file.write(str(soup.body))
 
-    headline_numbers = soup.find_all("li",{'class':'Y8-fY '})
-    followers = headline_numbers[1].find("span",{'class':'g47SY '})["title"]
+    headline_numbers = soup.find_all('span', attrs={'class':'g47SY'})
+    # print "headline_numbers: " + str(headline_numbers)
+    # followers = headline_numbers[1].find("span",{'class':'g47SY lOXF2'})["title"]
+    followers = headline_numbers[1]["title"]
+
     #print followers
     return followers
 
@@ -45,4 +46,5 @@ while(1):
     print "=== Instagram Followers === "
     print " @paclema: " + str(paclema)
     print " @wundercurves: " + str(wundercurves) + "\n"
+    # break
     time.sleep(10)
