@@ -1,6 +1,10 @@
 # Requeriments:
 #   - Beautifulsoup
 #   - Selenium: https://stackoverflow.com/a/18131102
+#   - Drivers: https://selenium-python.readthedocs.io/installation.html#drivers
+#       Download the geckodriver in your folder and:
+#       export PATH=$PATH:/path/to/directory/of/executable/downloaded/in/previous/step
+
 
 
 # import libraries
@@ -48,7 +52,7 @@ def check_ampel_status(url):
     # print ("color: " + str(color)) # class="circle green active" the color is the element id 1
 
     driver.quit()
-    driver.close()
+    # driver.close()
 
     return color
 
@@ -86,7 +90,7 @@ def check_number_status(url):
     # print ("visitors: " + str(visitors))
 
     driver.quit()
-    driver.close()
+    # driver.close()
 
     return visitors
 
