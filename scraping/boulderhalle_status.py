@@ -19,6 +19,14 @@ import re
 from influxdb import InfluxDBClient
 from datetime import datetime
 
+
+# Selenium webdriver object:
+os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
+driver = webdriver.Firefox()
+
+# Configurations:
+UPDATE_DB_DELAY = 2     # Minutes between updates
+
 def check_ampel_status(url):
 
     # # specify the url
@@ -28,8 +36,8 @@ def check_ampel_status(url):
     file = open("html.txt","w")
 
     # Instagram html is processed by javascript so we need to open the url with Firefox to be processed:
-    os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
-    driver = webdriver.Firefox()
+    # os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
+    # driver = webdriver.Firefox()
     driver.get(url)
 
     soup = BeautifulSoup(driver.page_source,'html.parser')
@@ -51,7 +59,7 @@ def check_ampel_status(url):
     color = color_actived['class'][1]
     # print ("color: " + str(color)) # class="circle green active" the color is the element id 1
 
-    driver.quit()
+    # driver.quit()
     # driver.close()
 
     return color
@@ -74,8 +82,8 @@ def check_number_status(url):
     # file = open("html.txt","w")
 
     # Instagram html is processed by javascript so we need to open the url with Firefox to be processed:
-    os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
-    driver = webdriver.Firefox()
+    # os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
+    # driver = webdriver.Firefox()
     driver.get(url)
 
     soup = BeautifulSoup(driver.page_source,'html.parser')
@@ -89,7 +97,7 @@ def check_number_status(url):
     visitors = headline_results[0]['data-value']
     # print ("visitors: " + str(visitors))
 
-    driver.quit()
+    # driver.quit()
     # driver.close()
 
     return visitors
@@ -153,12 +161,23 @@ while(1):
     print ("=== Boulderhalle availability === ")
     bloc = check_ampel_status('https://boulderhalle-leipzig.de/')
     print (" BLOC no limit: " + str(bloc))
-    update_db(halle = "BLOC", data = str(bloc))
+    try:
+      update_db(halle = "BLOC", data = str(bloc))
+    except:
+      print("update_db not successful")
+
 
     # kosmos = check_number_status('http://kosmos-bouldern.de/')  # Better take the iframe url embeded from boulderado
     kosmos = check_number_status('https://www.boulderado.de/boulderadoweb/gym-clientcounter/index.php?mode=get&token=eyJhbGciOiJIUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJjdXN0b21lciI6Iktvc21vcyJ9.CElSaqJrlW0okupB9PMYfJBGjkNx_sJcYSsythLhKPw')
-    print (" Kosmos: " + str(kosmos) + "\n")
-    update_db(halle = "kosmos", data = int(kosmos))
+    print (" Kosmos: " + str(kosmos))
+    try:
+        update_db(halle = "kosmos", data = int(kosmos))
+    except:
+      print("update_db not successful")
+
+    # Timestamp:
+    dateTimeObj = datetime.now()
+    print('Last update: ', dateTimeObj.hour, ':', dateTimeObj.minute, ':', dateTimeObj.second)
 
     # break
-    time.sleep(60*10)
+    time.sleep(60*UPDATE_DB_DELAY)
