@@ -1,11 +1,12 @@
 # Requeriments:
 #   - Beautifulsoup
 #   - Selenium: https://stackoverflow.com/a/18131102
-#   - Drivers: https://selenium-python.readthedocs.io/installation.html#drivers
+#   - Drivers Firefox: https://selenium-python.readthedocs.io/installation.html#drivers
 #       Download the geckodriver in your folder and:
 #       export PATH=$PATH:/path/to/directory/of/executable/downloaded/in/previous/step
+#   - Drivers Chrome: https://linuxhint.com/chrome_selenium_headless_running/
 
-
+# START /B python3 boulderhalle_status.py > out2.txt
 
 # import libraries
 
@@ -19,10 +20,28 @@ import re
 from influxdb import InfluxDBClient
 from datetime import datetime
 
+# Using Firefox:
+# -------------
+# from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+# binary = FirefoxBinary('/usr/bin/firefox-esr')
+# driver = webdriver.Firefox(firefox_binary=binary)
 
 # Selenium webdriver object:
-os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
-driver = webdriver.Firefox()
+# os.environ['MOZ_HEADLESS'] = '1'    # We avoid to open the browser
+# driver = webdriver.Firefox()
+
+
+# Using Chrome:
+# -------------
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
+chromeOptions = Options()
+chromeOptions.headless = True   # We avoid to open the browser
+chromeOptions.add_argument("--no-sandbox")
+# chromeOptions.add_argument("--window-size=1280,720")
+driver = webdriver.Chrome(executable_path="/Users/pacle/Downloads/chromedriver_win32/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
+
 
 # Configurations:
 UPDATE_DB_DELAY = 2     # Minutes between updates
@@ -59,7 +78,6 @@ def check_ampel_status(url):
     color = color_actived['class'][1]
     # print ("color: " + str(color)) # class="circle green active" the color is the element id 1
 
-    # driver.quit()
     # driver.close()
 
     return color
@@ -97,7 +115,6 @@ def check_number_status(url):
     visitors = headline_results[0]['data-value']
     # print ("visitors: " + str(visitors))
 
-    # driver.quit()
     # driver.close()
 
     return visitors
@@ -163,8 +180,8 @@ while(1):
     print (" BLOC no limit: " + str(bloc))
     try:
       update_db(halle = "BLOC", data = str(bloc))
-    except:
-      print("update_db not successful")
+    except Exception as e:
+        print("update_db not successful: " + str(e))
 
 
     # kosmos = check_number_status('http://kosmos-bouldern.de/')  # Better take the iframe url embeded from boulderado
@@ -172,8 +189,8 @@ while(1):
     print (" Kosmos: " + str(kosmos))
     try:
         update_db(halle = "kosmos", data = int(kosmos))
-    except:
-      print("update_db not successful")
+    except Exception as e:
+        print("update_db not successful: " + str(e))
 
     # Timestamp:
     dateTimeObj = datetime.now()
@@ -181,3 +198,6 @@ while(1):
 
     # break
     time.sleep(60*UPDATE_DB_DELAY)
+
+
+driver.quit()
