@@ -46,7 +46,8 @@ if os.name == 'nt':
     driver = webdriver.Chrome(executable_path="/Users/pacle/Downloads/chromedriver_win32/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
 # Linux
 elif os.name == 'posix':
-    driver = webdriver.Chrome(executable_path="/usr/lib/chromium-browser/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
+    # driver = webdriver.Chrome(executable_path="/usr/lib/chromium-browser/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
+    driver = webdriver.Chrome(options=chromeOptions)  # Optional argument, if not specified will search path.
 
 
 # Configurations:

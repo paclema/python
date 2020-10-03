@@ -55,7 +55,11 @@ Codename:       stretch
 
 pip install selenium
 
-download the chromium driver from:
+Install the chromium webdriver from apt:
+sudo apt install chromium-chromedriver
+driver = webdriver.Chrome()
+
+Or download the chromium driver from:
 http://launchpadlibrarian.net/361669488/chromium-chromedriver_65.0.3325.181-0ubuntu0.14.04.1_armhf.deb
 wget http://launchpadlibrarian.net/361669488/chromium-chromedriver_65.0.3325.181-0ubuntu0.14.04.1_armhf.deb
 
