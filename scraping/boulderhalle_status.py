@@ -40,7 +40,13 @@ chromeOptions = Options()
 chromeOptions.headless = True   # We avoid to open the browser
 chromeOptions.add_argument("--no-sandbox")
 # chromeOptions.add_argument("--window-size=1280,720")
-driver = webdriver.Chrome(executable_path="/Users/pacle/Downloads/chromedriver_win32/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
+
+# Windows:
+if os.name == 'nt':
+    driver = webdriver.Chrome(executable_path="/Users/pacle/Downloads/chromedriver_win32/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
+# Linux
+elif os.name == 'posix':
+    driver = webdriver.Chrome(executable_path="/usr/lib/chromium-browser/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
 
 
 # Configurations:
@@ -108,8 +114,11 @@ def check_number_status(url):
 
     # file.write(str(soup.body))
 
-    # headline_results = soup.find_all('div', attrs={'class':'trafficlight'})
-    headline_results = soup.find_all('div', attrs={'class':'freepercent1'})
+    # headline_results = soup.find_all('div', attrs={'class':'freepercent1'})
+    # <div data-value="113" class="actcounter zoom"><div class="actcounter-title"><span>Besucher</span></div><div class="actcounter-content"><span data-value="113">113</span></div></div>
+    headline_results = soup.find_all('div', attrs={'class':'actcounter zoom'})
+
+
     # print ("headline_results: " + str(headline_results))
 
     visitors = headline_results[0]['data-value']
