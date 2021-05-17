@@ -70,3 +70,11 @@ sudo apt-get install -f
 It will install the driver to the path:
 /usr/lib/chromium-browser/chromedriver
 driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')  # Optional argument, if not specified will search path.
+
+
+- apk update
+- wget "https://mirror.fsmg.org.nz/alpine/v3.9/community/armv7/libcouchbase-libevent-2.9.5-r1.apk"
+- wget "https://mirror.fsmg.org.nz/alpine/v3.9/community/armv7/chromium-72.0.3626.121-r0.apk"
+- wget "https://mirror.fsmg.org.nz/alpine/v3.9/community/armv7/chromium-chromedriver-72.0.3626.121-r0.apk"
+- apk add --allow-untrusted libcouchbase-libevent-2.9.5-r1.apk
+- apk add --allow-untrusted chromium-72.0.3626.121-r0.apk chromium-chromedriver-72.0.3626.121-r0.apk
