@@ -1,10 +1,11 @@
 # Requeriments:
-#   - Beautifulsoup
-#   - Selenium: https://stackoverflow.com/a/18131102
+#   - Beautifulsoup --> pip install bs4
+#   - Selenium: https://stackoverflow.com/a/18131102 --> pip install selenium
 #   - Drivers Firefox: https://selenium-python.readthedocs.io/installation.html#drivers
 #       Download the geckodriver in your folder and:
 #       export PATH=$PATH:/path/to/directory/of/executable/downloaded/in/previous/step
-#   - Drivers Chrome: https://linuxhint.com/chrome_selenium_headless_running/
+#   - Drivers Chrome: https://linuxhint.com/chrome_selenium_headless_running/  --> with rpi4: sudo apt-get install chromium-chromedriver
+#   - InfluxDB:  pip install influxdb
 
 # START /B python3 boulderhalle_status.py > out2.txt
 
