@@ -84,10 +84,12 @@ def check_ampel_status(url):
     # Using regular expresion get the active color:
     container = headline_results[0]
     color_actived = container.find('div', {"class": re.compile("active$")})
+    if (color_actived != None ):
     # print ("color_actived: " + str(type(color_actived)))
     color = color_actived['class'][1]
     # print ("color: " + str(color)) # class="circle green active" the color is the element id 1
-
+    else:
+        color = "off"
     # driver.close()
 
     return color
@@ -149,6 +151,7 @@ def update_db(halle, data):
         if (data == "green"): data = 0
         elif (data == "yellow"): data = 1
         elif (data == "red"): data = 2
+        elif (data == "off"): data = -1
     else:
         data_name = "visitors"
 
