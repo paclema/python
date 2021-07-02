@@ -44,7 +44,7 @@ chromeOptions.add_argument("--no-sandbox")
 
 # Windows:
 if os.name == 'nt':
-    driver = webdriver.Chrome(executable_path="/Users/pacle/Downloads/chromedriver_win32/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
+    driver = webdriver.Chrome(executable_path="C:/Users/pacle/Downloads/chromedriver_win32/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
 # Linux
 elif os.name == 'posix':
     # driver = webdriver.Chrome(executable_path="/usr/lib/chromium-browser/chromedriver", options=chromeOptions)  # Optional argument, if not specified will search path.
@@ -191,12 +191,20 @@ def update_db(halle, data):
 ### Main loop:
 while(1):
 
-    print ("=== Boulderhalle availability === ")
+    print ("=== Klettern & Boulderhalle availability === ")
     # bloc = check_ampel_status('https://boulderhalle-leipzig.de/')
     bloc = check_ampel_status('https://147.webclimber.de/de/trafficlight?key=pZ5rnsqNK6ZRBnDkesDha1MF1tcXa88M')
     print (" BLOC no limit: " + str(bloc))
     try:
       update_db(halle = "BLOC", data = str(bloc))
+    except Exception as e:
+        print("update_db not successful: " + str(e))
+
+    # noLimit = check_ampel_status('https://kletterhalle-nolimit.de/')
+    noLimit = check_ampel_status('https://148.webclimber.de/de/trafficlight?key=T09KUqx3WXP1yF5AMCmYbHX6pG9DaGF2')
+    print (" No limit: " + str(noLimit))
+    try:
+      update_db(halle = "NoLimit", data = str(noLimit))
     except Exception as e:
         print("update_db not successful: " + str(e))
 
