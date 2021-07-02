@@ -146,7 +146,7 @@ def update_db(halle, data):
     # client.get_list_database() # [{'name': '_internal'}, {'name': 'homeassistant'}, {'name': 'boulder'}]
     # client.switch_database('boulder')
 
-    if (halle == "BLOC"):
+    if (halle == "BLOC" or halle == "NoLimit"):
         data_name = "status"
         if (data == "green"): data = 0
         elif (data == "yellow"): data = 1
