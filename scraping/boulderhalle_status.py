@@ -85,9 +85,9 @@ def check_ampel_status(url):
     container = headline_results[0]
     color_actived = container.find('div', {"class": re.compile("active$")})
     if (color_actived != None ):
-    # print ("color_actived: " + str(type(color_actived)))
-    color = color_actived['class'][1]
-    # print ("color: " + str(color)) # class="circle green active" the color is the element id 1
+        # print ("color_actived: " + str(type(color_actived)))
+        color = color_actived['class'][1]
+        # print ("color: " + str(color)) # class="circle green active" the color is the element id 1
     else:
         color = "off"
     # driver.close()
