@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Install dependencies:
+sudo apt-get install python3-pip chromium-chromedriver -y
+pip install bs4
+pip install selenium
+pip install influxdb
+
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 # Configure ddns config file:

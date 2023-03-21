@@ -1,4 +1,6 @@
 # Requeriments:
+# Using Debian, just run the install_boulderhalle_satatus.py script
+# Or manually install the
 #   - Beautifulsoup --> pip install bs4
 #   - Selenium: https://stackoverflow.com/a/18131102 --> pip install selenium
 #   - Drivers Firefox: https://selenium-python.readthedocs.io/installation.html#drivers
